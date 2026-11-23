@@ -3,76 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111111">
+  <meta name="description" content="TRENDORA - 지금 가장 트렌디한 데일리 패션">
   <title>TRENDORA | Wear Your Trend</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="db.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <div class="top-strip">♛ 신규 회원 가입 시 3,000P 지급</div>
+  <div class="topline">TRENDORA MEMBERSHIP · 가입 즉시 3,000P 지급</div>
   <header class="site-header">
-    <a class="logo" href="#" aria-label="TRENDORA 홈">TRENDO<span>RA</span></a>
-    <nav class="main-nav" aria-label="상품 카테고리">
-      <a href="#shop" data-category-link="ALL">전체</a>
-      <a href="#shop" data-category-link="TOP">TOP</a>
-      <a href="#shop" data-category-link="BOTTOM">BOTTOM</a>
-      <a href="#shop" data-category-link="OUTER">OUTER</a>
-      <a href="#shop" data-category-link="ACC">ACC</a>
+    <a class="logo" href="#" data-home>TRENDORA<span>®</span></a>
+    <nav class="main-nav" aria-label="주 메뉴">
+      <a href="#products" data-category="전체">SHOP</a>
+      <a href="#products" data-category="상의">TOP</a>
+      <a href="#products" data-category="하의">BOTTOM</a>
+      <a href="#products" data-category="아우터">OUTER</a>
     </nav>
     <div class="header-actions">
-      <button class="text-button" id="search-toggle" aria-label="검색 열기">SEARCH</button>
-      <button class="text-button" id="login-open">LOGIN</button>
-      <button class="icon-button" id="mypage-open" aria-label="마이페이지">MY</button>
-      <button class="icon-button cart-trigger" id="cart-open" aria-label="장바구니">BAG <span id="cart-count">0</span></button>
-      <button class="mobile-menu" id="mobile-menu" aria-label="메뉴 열기">☰</button>
+      <button class="icon-btn" id="search-toggle" aria-label="검색 열기">⌕</button>
+      <div id="account-menu" class="account-menu"></div>
+      <button class="icon-btn cart-head" id="cart-btn" aria-label="장바구니"> BAG <b id="cart-count">0</b></button>
+      <button class="menu-toggle" id="menu-toggle" aria-label="메뉴 열기">☰</button>
     </div>
   </header>
 
   <main>
-    <section class="hero" aria-label="TRENDORA 시즌 컬렉션">
+    <section class="hero" aria-label="TRENDORA 시즌 캠페인">
       <div class="hero-slides" id="hero-slides">
-        <article class="hero-slide active" style="--hero-bg:url('./img/hero-01.jpg')">
-          <div class="hero-copy"><p class="eyebrow">NEW COLLECTION</p><h1>TRENDORA</h1><p>WEAR YOUR TREND. MAKE IT YOURS.</p><a href="#shop" class="light-link">SHOP NOW <span>↗</span></a></div>
-        </article>
-        <article class="hero-slide" style="--hero-bg:url('./img/hero-02.jpg')">
-          <div class="hero-copy"><p class="eyebrow">THE DAILY EDIT</p><h1>LESS BUT BETTER.</h1><p>매일 손이 가는 감각적인 데일리 웨어.</p><a href="#shop" class="light-link">DISCOVER <span>↗</span></a></div>
-        </article>
-        <article class="hero-slide" style="--hero-bg:url('./img/hero-03.jpg')">
-          <div class="hero-copy"><p class="eyebrow">MAKE A STATEMENT</p><h1>OWN THE MOMENT.</h1><p>나만의 분위기를 만드는 한 끗 차이.</p><a href="#shop" class="light-link">EXPLORE <span>↗</span></a></div>
-        </article>
-        <article class="hero-slide" style="--hero-bg:url('./img/hero-04.jpg')">
-          <div class="hero-copy"><p class="eyebrow">TRENDORA ARCHIVE</p><h1>YOUR NEW FAVORITE.</h1><p>지금 가장 입고 싶은 스타일을 만나보세요.</p><a href="#shop" class="light-link">VIEW ITEMS <span>↗</span></a></div>
-        </article>
+        <div class="hero-slide active" style="background-image:url('img/hero-01.jpg')"></div>
+        <div class="hero-slide" style="background-image:url('img/hero-02.jpg')"></div>
+        <div class="hero-slide" style="background-image:url('img/hero-03.jpg')"></div>
+        <div class="hero-slide" style="background-image:url('img/hero-04.jpg')"></div>
       </div>
-      <div class="hero-bottom"><span>CURATED FOR YOUR EVERYDAY</span><div class="slide-controls"><span id="slide-number">01</span><div class="slide-progress"><i id="slide-progress"></i></div><span>04</span><button id="slide-prev" aria-label="이전 배너">←</button><button id="slide-next" aria-label="다음 배너">→</button></div></div>
+      <div class="hero-shade"></div>
+      <div class="hero-copy">
+        <p class="eyebrow">NEW SEASON · 2026 COLLECTION</p>
+        <h1>WEAR YOUR<br><em>OWN TREND.</em></h1>
+        <p>평범한 오늘을 조금 더 특별하게.</p>
+        <a href="#products" class="white-link">컬렉션 보기 <span>↗</span></a>
+      </div>
+      <div class="hero-bottom"><span>01 — 04</span><div class="hero-dots" id="hero-dots"></div><span>SCROLL TO EXPLORE ↓</span></div>
     </section>
 
-    <section class="benefit-row">
-      <div><b>3,000P</b><span>신규 회원 가입 혜택</span></div><div><b>POINT REWARD</b><span>회원 등급별 최대 7% 적립</span></div><div><b>DAILY LOOK</b><span>매일 입고 싶은 트렌디 웨어</span></div>
-    </section>
+    <section class="ticker"><div>FIND YOUR STYLE <i>✳</i> MAKE YOUR MOMENT <i>✳</i> TRENDORA DAILY WEAR <i>✳</i> FIND YOUR STYLE <i>✳</i></div></section>
 
-    <section class="shop-section section-wrap" id="shop">
-      <div class="section-heading"><div><h2>BEST SELLERS</h2></div><a class="section-more" href="#shop">더보기 ›</a></div>
-      <div class="search-panel" id="search-panel"><input id="search-input" type="search" placeholder="상품명을 검색해 보세요" aria-label="상품 검색"><button id="search-clear">초기화</button></div>
-      <div class="shop-toolbar"><div class="category-tabs" id="category-tabs"><button class="active" data-category="ALL">ALL</button><button data-category="TOP">TOP</button><button data-category="BOTTOM">BOTTOM</button><button data-category="OUTER">OUTER</button><button data-category="ACC">ACC</button></div><label class="sort-label">정렬 <select id="sort-select"><option value="popular">추천순</option><option value="low">낮은 가격순</option><option value="high">높은 가격순</option><option value="name">이름순</option></select></label></div>
+    <section class="section products-section" id="products">
+      <div class="section-head">
+        <div><p class="eyebrow dark">CURATED FOR YOU</p><h2>NEW & TRENDING<span>.</span></h2></div>
+        <p class="section-desc">지금 가장 많이 찾는 TRENDORA의 아이템</p>
+      </div>
+      <div class="shop-tools">
+        <div class="filter-tabs" id="filter-tabs">
+          <button class="filter active" data-category="전체">ALL</button>
+          <button class="filter" data-category="상의">TOP</button>
+          <button class="filter" data-category="하의">BOTTOM</button>
+          <button class="filter" data-category="아우터">OUTER</button>
+          <button class="filter" data-category="잡화">ACC</button>
+        </div>
+        <label class="search-box"><span>⌕</span><input id="product-search" type="search" placeholder="상품명 검색"></label>
+      </div>
       <div class="product-grid" id="product-grid"></div>
-      <p class="empty-message hidden" id="empty-message">검색 결과가 없습니다.</p>
     </section>
 
-    <section class="brand-banner"><p class="eyebrow">THE TRENDORA MOOD</p><h2>STYLE IS A WAY<br>TO SAY WHO YOU ARE.</h2><p>유행을 따르기보다, 나만의 트렌드를 입다.</p></section>
+    <section class="campaign">
+      <div class="campaign-image" role="img" aria-label="패션 캠페인 이미지"></div>
+      <div class="campaign-copy"><p class="eyebrow">THE DAILY EDIT</p><h2>LESS, BUT<br><em>BETTER.</em></h2><p>매일 손이 가는 옷, 오래 기억되는 스타일.</p><a href="#products" class="line-link">DISCOVER MORE ↗</a></div>
+    </section>
+
+    <section class="benefits section">
+      <div><b>01</b><h3>YOUR FIRST 3,000P</h3><p>회원가입 즉시 3,000 포인트</p></div>
+      <div><b>02</b><h3>UP TO 7% POINT</h3><p>등급에 따라 구매 금액의 최대 7% 적립</p></div>
+      <div><b>03</b><h3>YOUR OWN ARCHIVE</h3><p>마이페이지에서 주문 내역 확인</p></div>
+    </section>
   </main>
 
-  <footer class="site-footer"><a class="logo footer-logo" href="#">TRENDO<span>RA</span></a><p>WEAR YOUR TREND. MAKE IT YOURS.</p><small>본 사이트는 대학 수업용으로 제작된 쇼핑몰 체험 페이지입니다. 실제 결제 및 배송은 진행되지 않습니다.</small><small>© 2026 TRENDORA. ALL RIGHTS RESERVED.</small></footer>
+  <footer class="footer">
+    <a class="logo footer-logo" href="#" data-home>TRENDORA<span>®</span></a>
+    <p>WEAR YOUR OWN TREND.</p>
+    <small>본 쇼핑몰은 대학 수업용 프런트엔드 시연 프로젝트입니다.</small>
+    <small>© 2026 TRENDORA. DEMO STORE.</small>
+  </footer>
 
-  <div class="overlay hidden" id="overlay"></div>
-  <aside class="drawer" id="cart-drawer" aria-label="장바구니" aria-hidden="true"><div class="drawer-head"><h2>SHOPPING BAG <span id="drawer-count">0</span></h2><button class="close-button" data-close>×</button></div><div class="drawer-content" id="cart-items"></div><div class="drawer-footer"><div class="total-line"><span>상품 합계</span><b id="cart-total">0원</b></div><button class="black-button full-button" id="checkout-open">체험 결제하기 <span>→</span></button><p>체험 결제 완료 시 주문 내역만 저장됩니다.</p></div></aside>
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="cart-drawer" aria-label="장바구니">
+    <div class="drawer-head"><h2>YOUR BAG <span id="drawer-count">(0)</span></h2><button class="close-btn" data-close>×</button></div>
+    <div class="drawer-body" id="cart-items"></div>
+    <div class="drawer-foot"><div class="total-line"><span>총 상품 금액</span><strong id="cart-total">0원</strong></div><button class="primary-btn" id="checkout-btn">주문하기 <span>→</span></button><p>체험 결제이며 실제 결제는 진행되지 않습니다.</p></div>
+  </aside>
 
-  <section class="modal hidden" id="product-modal" role="dialog" aria-modal="true" aria-label="상품 상세"><button class="modal-close" data-close>×</button><div id="product-detail"></div></section>
-  <section class="modal form-modal hidden" id="auth-modal" role="dialog" aria-modal="true" aria-label="회원 로그인 및 가입"><button class="modal-close" data-close>×</button><div class="modal-inner"><p class="eyebrow dark">WELCOME TO TRENDORA</p><h2 id="auth-title">LOGIN</h2><div class="auth-switch"><button class="active" data-auth="login">로그인</button><button data-auth="signup">회원가입</button></div><form id="auth-form"><label>아이디<input name="username" required minlength="3" placeholder="아이디를 입력하세요"></label><label id="name-field" class="hidden">이름<input name="name" placeholder="이름을 입력하세요"></label><label>비밀번호<input name="password" type="password" required minlength="4" placeholder="비밀번호 (4자 이상)"></label><button class="black-button full-button" id="auth-submit">로그인하기</button></form><p class="form-note">수업용 데모로, 입력 정보는 현재 브라우저에만 저장됩니다.</p></div></section>
-
-  <section class="modal form-modal hidden" id="mypage-modal" role="dialog" aria-modal="true" aria-label="마이페이지"><button class="modal-close" data-close>×</button><div class="modal-inner"><p class="eyebrow dark">MY TRENDORA</p><h2>MY PAGE</h2><div id="mypage-content"></div></div></section>
-  <section class="modal form-modal hidden" id="checkout-modal" role="dialog" aria-modal="true" aria-label="체험 결제"><button class="modal-close" data-close>×</button><div class="modal-inner"><p class="eyebrow dark">DEMO CHECKOUT</p><h2>ORDER</h2><div id="checkout-summary"></div><form id="checkout-form"><label>주문자 이름<input name="buyer" required placeholder="이름을 입력하세요"></label><label>연락처<input name="phone" required placeholder="010-0000-0000"></label><label>배송지<input name="address" required placeholder="체험용 배송지를 입력하세요"></label><div class="checkout-total"><span>결제 예정 금액</span><b id="checkout-total">0원</b></div><button class="black-button full-button">체험 결제 완료</button></form><p class="form-note">실제 결제는 발생하지 않으며 주문 내역만 저장됩니다.</p></div></section>
-
+  <section class="modal" id="product-modal" aria-label="상품 상세">
+    <button class="close-btn modal-close" data-close>×</button><div id="product-detail"></div>
+  </section>
+  <section class="modal form-modal" id="auth-modal" aria-label="회원 메뉴">
+    <button class="close-btn modal-close" data-close>×</button><div id="auth-content"></div>
+  </section>
+  <section class="modal form-modal" id="mypage-modal" aria-label="마이페이지">
+    <button class="close-btn modal-close" data-close>×</button><div id="mypage-content"></div>
+  </section>
+  <section class="modal form-modal" id="checkout-modal" aria-label="체험 결제">
+    <button class="close-btn modal-close" data-close>×</button><div id="checkout-content"></div>
+  </section>
   <div class="toast" id="toast" role="status"></div>
-  <script src="./script.js"></script>
 </body>
 </html>
